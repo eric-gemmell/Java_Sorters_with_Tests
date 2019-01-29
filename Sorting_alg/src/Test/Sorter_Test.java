@@ -1,29 +1,29 @@
 package Test;
 import org.junit.Assert;
-import org.junit.Rule;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.TemporaryFolder;
 
 import Sorters.InsertSorter;
+import Sorters.MergeSorter;
 import Sorters.SelectionSorter;
 import Sorters.Sorter;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import java.util.concurrent.TimeUnit;
 public class Sorter_Test {
 	Sorter insertSorter;
 	Sorter selectionSorter;
+	Sorter mergeSorter;
 	int[] file1,file2,file3,file4;
 	
-	private int[] LoadFile(String filePath) {
+	private int[] LoadFile(String filePath) {		
 		String currentLine = null;
 		BufferedReader br = null;
 		ArrayList<Integer> ints = new ArrayList<>();
@@ -34,6 +34,7 @@ public class Sorter_Test {
 			}
 		}
 		catch (IOException e) {
+			System.out.println("HEYO");
 			e.printStackTrace();
 		}
 		int[] a = new int[ints.size()];
@@ -46,6 +47,7 @@ public class Sorter_Test {
 	void setUp() throws Exception {
 		this.insertSorter = new InsertSorter();
 		this.selectionSorter = new SelectionSorter();
+		this.mergeSorter = new MergeSorter();
 		this.file1 = LoadFile("./src/Test/10.txt");
 		this.file2 = LoadFile("./src/Test/50.txt");
 		this.file3 = LoadFile("./src/Test/100.txt");
@@ -55,6 +57,7 @@ public class Sorter_Test {
 	void tearDown() {
 		this.insertSorter = null;
 		this.selectionSorter = null;
+		this.mergeSorter = null;
 	}
 	@Test
 	public void insertSorterHasSortMethod() {
@@ -78,7 +81,19 @@ public class Sorter_Test {
 				break;
 			}
 		}
-		Assert.assertTrue("Insert Sorter needs to have SortIntArray function...",hasMethod);
+		Assert.assertTrue("Selection Sorter needs to have SortIntArray function...",hasMethod);
+	}
+	@Test
+	public void mergeSorterHasSortMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.mergeSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortIntArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("Merge Sorter needs to have SortIntArray function...",hasMethod);
 	}
 	@Test
 	public void insertSorterHasFunctionalTestMethod() {
@@ -86,7 +101,11 @@ public class Sorter_Test {
 	}
 	@Test
 	public void selectionSorterHasFunctionalTestMethod() {
-		Assert.assertNotEquals("",this.insertSorter.Test());
+		Assert.assertNotEquals("",this.selectionSorter.Test());
+	}
+	@Test
+	public void mergeSorterHasFunctionalTestMethod() {
+		Assert.assertNotEquals("",this.mergeSorter.Test());
 	}
 	@Test
 	public void insertSorterSortIntArrayWorksCorrectly() {
@@ -96,19 +115,30 @@ public class Sorter_Test {
 	public void selectionSorterSortIntArrayWorksCorrectly() {
 		Assert.assertArrayEquals(new int[]{1,2,3,5,58,68,78,98,219}, this.selectionSorter.SortIntArray(new int[]{68,219,5,2,78,1,58,3,98}));
 	}
-	
 	@Test
-	public void TimeSorters() {
-		System.out.println("Insert Sorter Sort Speeds (picoseconds):\n");
-		System.out.println("[10]: "+(TimeToSort(file1,insertSorter)));
-		System.out.println("[50]: "+(TimeToSort(file2,insertSorter)));
-		System.out.println("[100]: "+(TimeToSort(file3,insertSorter)));
-		System.out.println("[1000]: "+(TimeToSort(file4,insertSorter)) +"\n");
-		System.out.println("Selection Sorter Sort Speeds (picoseconds):\n");
-		System.out.println("[10]: "+(TimeToSort(file1,selectionSorter)));
-		System.out.println("[50]: "+(TimeToSort(file2,selectionSorter)));
-		System.out.println("[100]: "+(TimeToSort(file3,selectionSorter)));
-		System.out.println("[1000]: "+(TimeToSort(file4,selectionSorter)));
+	public void mergeSorterSortIntArrayWorksCorrectly() {
+		Assert.assertArrayEquals(new int[]{1,2,3,5,58,68,78,98,219}, this.mergeSorter.SortIntArray(new int[]{68,219,5,2,78,1,58,3,98}));
+	}
+	@Test
+	public void mergeSorterMergeFunctionWorksCorrectly() {
+		MergeSorter mergeSorter = new MergeSorter();
+		int[] a = {1,2,4,6,3,6,8,9};
+		mergeSorter.Merge(a,0,3,7);
+		Assert.assertArrayEquals(a,new int[] {1,2,3,4,6,6,8,9});
+	}
+	@Test
+	public void PrintSorterTimes() {
+		getSortTimesForGivenSorter(this.selectionSorter);
+		getSortTimesForGivenSorter(this.insertSorter);
+		getSortTimesForGivenSorter(this.mergeSorter);
+	}
+	private void getSortTimesForGivenSorter(Sorter sorter) {
+		System.out.println(sorter.getClass().getSimpleName()+" Sorter Sort Speeds (picoseconds):\n");
+		//System.out.println("Everything good so far... " + Arrays.toString(file1));
+		System.out.println("[10]: "+(TimeToSort(file1,sorter)));
+		System.out.println("[50]: "+(TimeToSort(file2,sorter)));
+		System.out.println("[100]: "+(TimeToSort(file3,sorter)));
+		System.out.println("[1000]: "+(TimeToSort(file4,sorter)) + "\n");
 	}
 	private long TimeToSort(int[] toSort,Sorter sorter) {
 		long startTime = System.nanoTime();

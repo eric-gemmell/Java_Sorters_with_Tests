@@ -5,7 +5,8 @@ import java.util.Arrays;
 public class SelectionSorter extends Sorter {
 
 	@Override
-	public int[] SortIntArray(int[] toSort) {
+	public int[] SortIntArray(int[] preToSort) {
+		int[] toSort = Arrays.copyOf(preToSort,preToSort.length);
 		int[] Sorted = new int[toSort.length];
 		for (int i = 0; i < toSort.length;i++) {
 			int minPos = 0;
