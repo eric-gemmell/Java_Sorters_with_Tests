@@ -5,9 +5,8 @@ import java.util.Arrays;
 public class SelectionSorter extends Sorter {
 
 	@Override
-	public int[] SortIntArray(int[] preToSort) {
-		int[] toSort = Arrays.copyOf(preToSort,preToSort.length);
-		int[] Sorted = new int[toSort.length];
+	public void SortIntArray(int[] Sorted) {
+		int[] toSort = Arrays.copyOf(Sorted,Sorted.length);
 		for (int i = 0; i < toSort.length;i++) {
 			int minPos = 0;
 			for(int j = 0; j<toSort.length;j++) {
@@ -18,10 +17,11 @@ public class SelectionSorter extends Sorter {
 			Sorted[i] = toSort[minPos];
 			toSort[minPos] = Integer.MAX_VALUE;
 		}
-		return Sorted;
 	}
-	public  static void main(String[] Args) {
+	public static void main(String[] Args) {
+		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
 		Sorter sorter = new SelectionSorter();
-		System.out.println(Arrays.toString(sorter.SortIntArray(new int[]{7,7,6,1,8,4,2})));
+		sorter.SortIntArray(a);
+		System.out.println(Arrays.toString(a));
 	}
 }

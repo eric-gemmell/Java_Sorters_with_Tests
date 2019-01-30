@@ -5,8 +5,7 @@ import java.util.Arrays;
 public class InsertSorter extends Sorter {
 
 	@Override
-	public int[] SortIntArray(int[] toSort) {
-		int[] Sorted = Arrays.copyOf(toSort,toSort.length);
+	public void SortIntArray(int[] Sorted) {
 		for (int j = 1; j < Sorted.length;j++) {
 			int valueAtJ = Sorted[j];
 			
@@ -17,13 +16,11 @@ public class InsertSorter extends Sorter {
 			}
 			Sorted[i+1] = valueAtJ;
 		}
-		return Sorted;
 	}
-	public  static void main(String[] Args) {
-		Sorter sorter = new InsertSorter();
+	public static void main(String[] Args) {
 		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
-		int[] b = sorter.SortIntArray(a);
-		System.out.println(Arrays.toString(b));
+		Sorter sorter = new InsertSorter();
+		sorter.SortIntArray(a);
 		System.out.println(Arrays.toString(a));
 	}
 }

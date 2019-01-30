@@ -5,10 +5,9 @@ import java.util.Arrays;
 public class MergeSorter extends Sorter {
 
 	@Override
-	public int[] SortIntArray(int[] toSort) {
-		int[] Sorted = Arrays.copyOf(toSort,toSort.length);
-		MergeSort(Sorted,0,Sorted.length-1);
-		return Sorted;
+	public void SortIntArray(int[] toSort) {
+		MergeSort(toSort,0,toSort.length-1);
+
 	}
 	public void MergeSort(int[] toSort, int p, int r) {
 		if(p<r) {
@@ -45,14 +44,10 @@ public class MergeSorter extends Sorter {
 			}
 		}
 	}
-	public static void main(String[] args) {
-		MergeSorter mergeSorter = new MergeSorter();
-		int[] a = {1,2,4,6,3,6,8,9};
-		mergeSorter.Merge(a,0,3,7);
-		System.out.println(Arrays.toString(a));
-		
-		a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
-		mergeSorter.MergeSort(a,0,a.length-1);
+	public static void main(String[] Args) {
+		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
+		Sorter sorter = new MergeSorter();
+		sorter.SortIntArray(a);
 		System.out.println(Arrays.toString(a));
 	}
 }
