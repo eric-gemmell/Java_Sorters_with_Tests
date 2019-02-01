@@ -6,17 +6,9 @@ public class InsertSorter extends Sorter {
 
 	@Override
 	public void SortIntArray(int[] Sorted) {
-		for (int j = 1; j < Sorted.length;j++) {
-			int valueAtJ = Sorted[j];
-			
-			int i = j-1;
-			while (i >= 0 && Sorted[i] > valueAtJ) {
-				Sorted[i+1] = Sorted[i];
-				i--;
-			}
-			Sorted[i+1] = valueAtJ;
-		}
+		SortSubArray(Sorted, 0, Sorted.length -1);
 	}
+	@Override
 	public void SortSubArray(int[] A,int p, int r) {
 		for (int j = p+1; j < r+1;j++) {
 			int valueAtJ = A[j];

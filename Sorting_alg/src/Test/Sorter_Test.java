@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Sorters.InsertSorter;
+import Sorters.MedianQuickSorter;
 import Sorters.MergeSorter;
 import Sorters.QuickCutOffSorter;
 import Sorters.QuickSorter;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Sorter_Test {
 	Sorter insertSorter;
@@ -25,7 +27,9 @@ public class Sorter_Test {
 	Sorter mergeSorter;
 	Sorter quickSorter;
 	Sorter quickCutOffSorter;
+	Sorter medianQuickSorter;
 	int[] file1,file2,file3,file4;
+	List<Sorter> sorters;
 	
 	private int[] LoadFile(String filePath) {		
 		String currentLine = null;
@@ -54,6 +58,14 @@ public class Sorter_Test {
 		this.mergeSorter = new MergeSorter();
 		this.quickSorter = new QuickSorter();
 		this.quickCutOffSorter = new QuickCutOffSorter();
+		this.medianQuickSorter = new MedianQuickSorter();
+		this.sorters = new ArrayList<>();
+		this.sorters.add(new InsertSorter());
+		this.sorters.add(new SelectionSorter());
+		this.sorters.add(new MergeSorter());
+		this.sorters.add(new QuickSorter());
+		this.sorters.add(new QuickCutOffSorter());
+		this.sorters.add(new MedianQuickSorter());
 		this.file1 = LoadFile("./src/Test/10.txt");
 		this.file2 = LoadFile("./src/Test/50.txt");
 		this.file3 = LoadFile("./src/Test/100.txt");
@@ -66,6 +78,8 @@ public class Sorter_Test {
 		this.mergeSorter = null;
 		this.quickSorter = null;
 		this.quickCutOffSorter = null;
+		this.medianQuickSorter = null;
+		this.sorters = null;
 	}
 	@Test
 	public void insertSorterHasSortMethod() {
@@ -127,6 +141,90 @@ public class Sorter_Test {
 		}
 		Assert.assertTrue("quick Cut Off Sorter needs to have SortIntArray function...",hasMethod);
 	}
+	@Test
+	public void medianQuickSorterHasSortMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.medianQuickSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortIntArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("Median Quick Sorter needs to have SortIntArray function...",hasMethod);
+	}
+	@Test
+	public void medianQuickSorterHasSortSubArrayMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.medianQuickSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortSubArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("Median Quick Sorter needs to have SortSubArray function...",hasMethod);
+	}
+	@Test
+	public void selectionSorterHasSortSubArrayMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.selectionSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortSubArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("Selection Sorter needs to have SortSubArray function...",hasMethod);
+	}
+	@Test
+	public void insertSorterHasSortSubArrayMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.insertSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortSubArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("Insert Sorter needs to have SortSubArray function...",hasMethod);
+	}
+	@Test
+	public void mergeSorterHasSortSubArrayMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.mergeSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortSubArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("Merge Sorter needs to have SortSubArray function...",hasMethod);
+	}
+	@Test
+	public void QuickSorterHasSortSubArrayMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.quickSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortSubArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("Quick Sorter needs to have SortSubArray function...",hasMethod);
+	}
+	@Test
+	public void QuickCutOffSorterHasSortSubArrayMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.quickCutOffSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortSubArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("Quick Cut Off Sorter needs to have SortSubArray function...",hasMethod);
+	}
 	
 	@Test
 	public void insertSorterHasFunctionalTestMethod() {
@@ -148,7 +246,11 @@ public class Sorter_Test {
 	public void quickCutOffSorterHasFunctionalTestMethod() {
 		Assert.assertNotEquals("",this.quickCutOffSorter.Test());
 	}
-	
+	@Test
+	public void medianQuickSorterHasFunctionalTestMethod() {
+		Assert.assertNotEquals("",this.medianQuickSorter.Test());
+	}
+
 	@Test
 	public void insertSorterSortIntArrayWorksCorrectly() {
 		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
@@ -179,6 +281,12 @@ public class Sorter_Test {
 		this.quickCutOffSorter.SortIntArray(a);
 		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);
 	}
+	@Test
+	public void medianQuickSorterSortIntArrayWorksCorrectly() {
+		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
+		this.medianQuickSorter.SortIntArray(a);
+		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);
+	}
 	
 	@Test
 	public void mergeSorterMergeFunctionWorksCorrectly() {
@@ -207,6 +315,10 @@ public class Sorter_Test {
 	@Test
 	public void printQuickCutOffSortTimes() {
 		getSortTimesForGivenSorter(this.quickCutOffSorter);
+	}
+	@Test
+	public void printMedianQuickSortTimes() {
+		getSortTimesForGivenSorter(this.medianQuickSorter);
 	}
 	
 	private void getSortTimesForGivenSorter(Sorter sorter) {

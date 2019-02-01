@@ -6,17 +6,17 @@ public class MergeSorter extends Sorter {
 
 	@Override
 	public void SortIntArray(int[] toSort) {
-		MergeSort(toSort,0,toSort.length-1);
+		SortSubArray(toSort,0,toSort.length-1);
 
 	}
-	public void MergeSort(int[] toSort, int p, int r) {
+	@Override
+	public void SortSubArray(int[] toSort, int p, int r) {
 		if(p<r) {
 			int q = (p+r)/2;
-			MergeSort(toSort,p,q);
-			MergeSort(toSort,q+1,r);
+			SortSubArray(toSort,p,q);
+			SortSubArray(toSort,q+1,r);
 			Merge(toSort,p,q,r);
-		}
-		
+		}		
 	}
 	public void Merge(int[] toMerge, int p, int q, int r) {
 		int n1 = q - p + 1;

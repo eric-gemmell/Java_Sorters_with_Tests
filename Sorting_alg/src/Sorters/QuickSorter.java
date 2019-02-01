@@ -6,15 +6,17 @@ public class QuickSorter extends Sorter {
 
 	@Override
 	public void SortIntArray(int[] toSort) {
-		QuickSort(toSort,0,toSort.length-1);
+		SortSubArray(toSort,0,toSort.length-1);
 	}
-	public void QuickSort(int[] A, int p, int r) {
+	@Override
+	public void SortSubArray(int[] A, int p, int r) {
 		if(p<r) {
 			int q = Partition(A, p,r);
-			QuickSort(A,p,q-1);
-			QuickSort(A,q+1,r);
-		}
+			SortSubArray(A,p,q-1);
+			SortSubArray(A,q+1,r);
+		}		
 	}
+
 	public int Partition(int[] A,int p, int r) {
 		int pivot = A[r];
 		int i = p-1;
