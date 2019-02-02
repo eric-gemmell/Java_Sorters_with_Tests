@@ -30,7 +30,7 @@ public class Sorter_Test {
 	Sorter quickCutOffSorter;
 	Sorter medianQuickSorter;
 	Sorter threeWayQuickSorter;
-	int[] file1,file2,file3,file4;
+	int[] file1,file2,file3,file4,file5,file6;
 	
 	private int[] LoadFile(String filePath) {		
 		String currentLine = null;
@@ -65,6 +65,8 @@ public class Sorter_Test {
 		this.file2 = LoadFile("./src/Test/50.txt");
 		this.file3 = LoadFile("./src/Test/100.txt");
 		this.file4 = LoadFile("./src/Test/1000.txt");
+		this.file5 = LoadFile("./src/Test/bigInt.txt");
+		this.file6 = LoadFile("./src/Test/int500k.txt");
 	}
 	@AfterEach
 	void tearDown() {
@@ -335,6 +337,7 @@ public class Sorter_Test {
 	@Test
 	public void printMergeSortTimes() {
 		getSortTimesForGivenSorter(this.mergeSorter);
+		getLargeSortTimesForGivenSorter(this.mergeSorter);
 	}
 	@Test
 	public void printQuickSortTimes() {
@@ -343,21 +346,29 @@ public class Sorter_Test {
 	@Test
 	public void printQuickCutOffSortTimes() {
 		getSortTimesForGivenSorter(this.quickCutOffSorter);
+		getLargeSortTimesForGivenSorter(this.quickCutOffSorter);
 	}
 	@Test
 	public void printMedianQuickSortTimes() {
 		getSortTimesForGivenSorter(this.medianQuickSorter);
+		getLargeSortTimesForGivenSorter(this.medianQuickSorter);
 	}
 	@Test
 	public void printThreeWayQuickSortTimes() {
 		getSortTimesForGivenSorter(this.threeWayQuickSorter);
+		getLargeSortTimesForGivenSorter(this.threeWayQuickSorter);
 	}
 	private void getSortTimesForGivenSorter(Sorter sorter) {
-		System.out.println(sorter.getClass().getSimpleName()+" Sorter Sort Speeds (nanoseconds):\n");
+		System.out.println(sorter.getClass().getSimpleName()+" Sorter Sort Speeds (picoseconds):\n");
 		System.out.println("[10]: "+(TimeToSort(file1,sorter)));
 		System.out.println("[50]: "+(TimeToSort(file2,sorter)));
 		System.out.println("[100]: "+(TimeToSort(file3,sorter)));
-		System.out.println("[1000]: "+(TimeToSort(file4,sorter)) + "\n");
+		System.out.println("[1000]: "+(TimeToSort(file4,sorter))+"\n");
+
+	}
+	private void getLargeSortTimesForGivenSorter(Sorter sorter) {
+		System.out.println("[500000]: "+(TimeToSort(file5,sorter)));
+		System.out.println("[1000000]: "+(TimeToSort(file6,sorter)) + "\n");
 	}
 	private long TimeToSort(int[] toSort,Sorter sorter) {
 		int[] backup = Arrays.copyOf(toSort,toSort.length);

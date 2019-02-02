@@ -20,4 +20,133 @@ $$ |  $$ |$$ |      $$ |\$  /$$ |$$ |\$  /$$ |$$ |      $$ |      $$ |          
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  
-                                                                                                                                                                                                
+How To Run:
+-----------
+
+In order to get time specifications please run Sorter_Test.java in Eclipse, it is set up with JUnit and prints the speed results to the console for the multiple supplied txt files.
+
+Here is an example output:
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+MedianQuickSorter Sorter Sort Speeds (nanoseconds):
+
+[10]: 20007
+[50]: 34126
+[100]: 91398
+[1000]: 829663
+
+QuickCutOffSorter Sorter Sort Speeds (nanoseconds):
+
+[10]: 27089
+[50]: 41578
+[100]: 101313
+[1000]: 886566
+
+InsertSorter Sorter Sort Speeds (nanoseconds):
+
+[10]: 9219
+[50]: 3189
+[100]: 10097
+[1000]: 776546
+
+SelectionSorter Sorter Sort Speeds (nanoseconds):
+
+[10]: 16790
+[50]: 52221
+[100]: 211112
+[1000]: 4597704
+
+QuickSorter Sorter Sort Speeds (nanoseconds):
+
+[10]: 3965
+[50]: 8846
+[100]: 19125
+[1000]: 222751
+
+ThreeWayQuickSort Sorter Sort Speeds (nanoseconds):
+
+[10]: 11373
+[50]: 63622
+[100]: 96983
+[1000]: 664972
+
+MergeSorter Sorter Sort Speeds (nanoseconds):
+
+[10]: 8297
+[50]: 36703
+[100]: 78599
+[1000]: 735480
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+Part1 
+-----
+
+Question d)
+-----------
+3 Way Quick Sort works the following way:
+
+First we must concern ourselves with partitioning an array, following is an explanation for 3 way partitioning an array:
+
+int pivot 
+	the value arround which the array will be split
+
+int i
+	Index of the last integer in the array lesser than the pointer. All values in the array before i are smaller than pivot. 
+
+int j 
+	Index of the first integer in the array greater than the pointer. All values in the array after j are larger than pivot.
+
+int[] A
+	the Array to be sorted
+
+pivot is initialized to the last element of the array for simplicity, but this can be changed.
+int i = p -1 where p is the first element of the array we want to partition, if the whole array is partitioned, p is 0.
+int j = r +1 where r is the last element of the array we want to partition, if the whole array is partitioned, r is the length of the array -1 
+
+These values for i and j imply that we do not have any sorted elements at the begining.
+
+Then we recurively iterate through each element of the array, using an index x. If A[x] is smaller than the pivot, we increase i by one, since we have one more value smaller than pivot, and we Swap A[i] and A[x]. 
+If A[x] is bigger than pivot then we decrease j by 1, since we have one more value greater than pivot, we swap A[j] and A[x] and we must decrease x by one since the value we just swaped for isn't necessarily smaller than the pivot.
+If A[x] and pivot are equal we don't do anything.
+We stop iterating once we know that all elements are around the pivot, meaning that x is greater or equal to j, since all elements at and after j are larger than pivot.
+
+We return i and j-1, the boundries delimiting the values equal to the pivot, so that we can then recursively partition the two halves. The values equal to pivot are already sorted.
+
+In Sudo Code:
+
+int[] Partition(Array A,int p, int r) {
+	pivot = A[r]
+	i = p-1
+	j = r+1
+	for(int x = p; x < j; x++) {
+		if(A[x]<pivot) {
+			i++
+			Swap(A[i],A[x])
+		}
+		else if(A[x]>pivot) {
+			j--
+			Swap(A[j],A[x])
+			x--
+		}
+	}
+	return i and j-1
+
+Now For recursion:
+We understand that we need to partition recursively the two halves created by the Partition function, but what's important is knowing when to stop.
+We don't need to partition anymore the first partiton once i is smaller than the begining of the array that we want to sort, meaning that all values in the array are larger or equal than the pivot.
+We don't need to partition anymore the second partiton once j is larger than the end of the array that we want to sort, meaning that all values in the array are smaller or equal than the pivot.
+
+In Sudo Code:
+
+function SortSubArray(Array A, int p, int r) {
+	i, j = Partition(A, p,r);
+	if(i>p) {
+		SortSubArray(A,p,i);
+	}
+	if(j<r) {
+		SortSubArray(A,j,r);
+	}
+}
+
+
