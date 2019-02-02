@@ -17,28 +17,24 @@ public class ThreeWayQuickSort extends Sorter {
 		if(i_j[1]<r) {
 			SortSubArray(A,i_j[1],r);
 		}
-		
 	}
 
 	public int[] Partition(int[] A,int p, int r) {
 		int pivot = A[r];
 		int i = p-1;
-		int j = p-1;
-		for(int x = p; x <= r; x++) {
+		int j = r+1;
+		for(int x = p; x < j; x++) {
 			if(A[x]<pivot) {
 				i++;
-				j++;
-				Swap(A,i,j);
 				Swap(A,i,x);
 			}
-			else if(A[x]==pivot) {
-				j++;
+			else if(A[x]>pivot) {
+				j--;
 				Swap(A,j,x);
+				x--;
 			}
 		}
-		j++;
-		System.out.println(Arrays.toString(A));
-		return new int[] {i,j};
+		return new int[] {i,j-1};
 	}
 	public void Swap(int[] A, int p, int r) {
 		int temp = A[r];
@@ -46,12 +42,9 @@ public class ThreeWayQuickSort extends Sorter {
 		A[p] = temp;
 	}
 	public static void main(String[] Args) {
-		int[] a = new int[]{38, 2, 55, 98, 14, 37, 63, 70, 91, 55};
+		int[] a = new int[]{1,2,3,4,5,2,2,3,1,3,5,2,1,4,3,4,1,2,2,1,3,5,4,2,3,4,1,2,5,5,4,3,2,1,4,1,2,3,4,5,5,5,4,4,3,2,3,3,1,2,1,1,4};
 		ThreeWayQuickSort sorter = new ThreeWayQuickSort();
-		System.out.println(Arrays.toString(sorter.Partition(a,0,a.length-1)));
-		System.out.println(Arrays.toString(sorter.Partition(a,0,3)));
-		System.out.println(Arrays.toString(sorter.Partition(a,6,a.length-1)));
-		System.out.println(Arrays.toString(sorter.Partition(a,6,8)));
+		sorter.SortIntArray(a);
 		System.out.println(Arrays.toString(a));
 		
 	}

@@ -10,6 +10,7 @@ public class QuickSorter extends Sorter {
 	}
 	@Override
 	public void SortSubArray(int[] A, int p, int r) {
+		System.out.println("loop!");
 		if(p<r) {
 			int q = Partition(A, p,r);
 			SortSubArray(A,p,q-1);
