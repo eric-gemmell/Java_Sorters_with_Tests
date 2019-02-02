@@ -150,3 +150,116 @@ function SortSubArray(Array A, int p, int r) {
 }
 
 
+Part 2
+------
+
+Here is the log output of the times different sorting algorythms take to sort different sized arrays:
+
+QuickSorter Sorter Sort Speeds (picoseconds):
+
+[10]: 2758
+[50]: 6082
+[100]: 14911
+[1000]: 156285
+[500000]: 94313817
+[1000000]: 45341369
+
+QuickCutOffSorter Sorter Sort Speeds (picoseconds):
+
+[10]: 23543
+[50]: 36887
+[100]: 80502
+[1000]: 711973
+[500000]: 103718587
+[1000000]: 48503821
+
+MedianQuickSorter Sorter Sort Speeds (picoseconds):
+
+[10]: 18011
+[50]: 22772
+[100]: 69311
+[1000]: 467162
+[500000]: 99304109
+[1000000]: 40365931
+
+ThreeWayQuickSort Sorter Sort Speeds (picoseconds):
+
+[10]: 7630
+[50]: 166804
+[100]: 88961
+[1000]: 649620
+[500000]: 80488107
+[1000000]: 38998807
+
+MergeSorter Sorter Sort Speeds (picoseconds):
+
+[10]: 9155
+[50]: 43697
+[100]: 98306
+[1000]: 668410
+[500000]: 135395906
+[1000000]: 60183851
+
+InsertSorter Sorter Sort Speeds (picoseconds):
+
+[10]: 53382
+[50]: 24584
+[100]: 72613
+[1000]: 1287430
+[500000]: 399580005286
+[1000000]: 27069061770
+
+SelectionSorter Sorter Sort Speeds (picoseconds):
+
+[10]: 29682
+[50]: 64135
+[100]: 208313
+[1000]: 4401474
+[500000]: 593299454742
+[1000000]: 151529697544
+
+To start off lets compare the time it took for the 4 algorythms created in part one to sort the 1 million element array
+
+-Basic_QuickSort: 45.341369 milliseconds
+-QuickSort_with_InsertSort_CutOff: 48.503821 milliseconds
+-Median_Of_3_QuickSorter: 40.365931 milliseconds
+-3_Way_QuickSort: 38.998807 milliseconds
+
+We can see here 3_Way_QuickSort was the fastest, but not by much, something we would not have expected since 3_Way is designed for highly repetitive arrays. 
+One would expect QuickSort_with_InsertSort_CutOff to be the fastest since insert sort is faster for small arrays, but here that is not the case.
+These results are non conclusive however since here other factors such as how objects are declared can have an effect.
+
+When one compares any form of Quick Sort to insert or selection sort however the difference is obvious:
+-Insertion_Sort: 27069.061770 milliseconds, 27 seconds!
+-Selection_Sort: 151529.697544 milliseconds, 151 seconds!
+
+These cuadratic time sorting algorythms took more than 675 times longer than any version of quick sort, and if you look at the 500 thousand element array with large integers, the time taken is almost 10 minutes!
+Needless to say please don't make my selection sort sort the large arrays unless you really want to.
+These results make sense since in algorythms like Insertion Sort, one performs two nested for loops, each taking O(n) time, therefore compined they take O(n^2).
+
+Merge sort took 60.1 milliseconds to run, this is comparable to QuickSort algorythms, one 50% longer. And makes sense since Merge Sort is an algorythm of complexity O(n.log(n))
+
+
+Part 3
+------
+
+Worst Case Scenarios can be created very easily for both Quick Sort And Median of 3 Quick Sort, as can be seen in my JUnit test file.
+For standard quick sort, one only needs to create an ordered array, since quicksort will grab the last element of the list and partition the array into two around that value, and continue successively. 
+Each iteration of the partition loop takes O(n) time. Since in this worst case scenario, each iteration of the Partition only sorts one element, the loop is done n times, therefore the complexity is O(n^2).
+As can be seen in the output log of my JUnit test:
+------------------------------------------
+Quick Sorter Worst Case Scenario Analysis:
+Normal Sorting Time: 50578
+Worst Case Scenario Sorting Time: 685404
+Speed Factor: 13
+------------------------------------------
+
+For median of 3, the same thing can be acheived by simply feeding a n sized arra, all of value 0. Same as for QuickSort. Each iteration only sorts one element, therefore performing n^2 iterations and degrading to a complexity of O(n^2).
+Here are the output logs:
+-------------------------------------------------
+Median Quick Sorter Worst Case Scenario Analysis:
+Normal Sorting Time: 47539
+Worst Case Scenario Sorting Time: 1066484
+Speed Factor: 22
+-------------------------------------------------
+One thing to note is that feeding a worst case scenario array to these two algorythms, creates a buffer overflow exception for arrays over 1000!
