@@ -353,7 +353,7 @@ public class Sorter_Test {
 		getSortTimesForGivenSorter(this.threeWayQuickSorter);
 	}
 	private void getSortTimesForGivenSorter(Sorter sorter) {
-		System.out.println(sorter.getClass().getSimpleName()+" Sorter Sort Speeds (picoseconds):\n");
+		System.out.println(sorter.getClass().getSimpleName()+" Sorter Sort Speeds (nanoseconds):\n");
 		System.out.println("[10]: "+(TimeToSort(file1,sorter)));
 		System.out.println("[50]: "+(TimeToSort(file2,sorter)));
 		System.out.println("[100]: "+(TimeToSort(file3,sorter)));
