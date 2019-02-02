@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import Sorters.InsertSorter;
 import Sorters.MergeSorter;
+import Sorters.QuickCutOffSorter;
 import Sorters.QuickSorter;
 import Sorters.SelectionSorter;
 import Sorters.Sorter;
@@ -23,6 +24,7 @@ public class Sorter_Test {
 	Sorter selectionSorter;
 	Sorter mergeSorter;
 	Sorter quickSorter;
+	Sorter quickCutOffSorter;
 	int[] file1,file2,file3,file4;
 	
 	private int[] LoadFile(String filePath) {		
@@ -51,6 +53,7 @@ public class Sorter_Test {
 		this.selectionSorter = new SelectionSorter();
 		this.mergeSorter = new MergeSorter();
 		this.quickSorter = new QuickSorter();
+		this.quickCutOffSorter = new QuickCutOffSorter();
 		this.file1 = LoadFile("./src/Test/10.txt");
 		this.file2 = LoadFile("./src/Test/50.txt");
 		this.file3 = LoadFile("./src/Test/100.txt");
@@ -62,6 +65,7 @@ public class Sorter_Test {
 		this.selectionSorter = null;
 		this.mergeSorter = null;
 		this.quickSorter = null;
+		this.quickCutOffSorter = null;
 	}
 	@Test
 	public void insertSorterHasSortMethod() {
@@ -111,6 +115,18 @@ public class Sorter_Test {
 		}
 		Assert.assertTrue("quick Sorter needs to have SortIntArray function...",hasMethod);
 	}
+	@Test
+	public void quickCutOffSorterHasSortMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.quickCutOffSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortIntArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("quick Cut Off Sorter needs to have SortIntArray function...",hasMethod);
+	}
 	
 	@Test
 	public void insertSorterHasFunctionalTestMethod() {
@@ -128,12 +144,17 @@ public class Sorter_Test {
 	public void quickSorterHasFunctionalTestMethod() {
 		Assert.assertNotEquals("",this.quickSorter.Test());
 	}
+	@Test
+	public void quickCutOffSorterHasFunctionalTestMethod() {
+		Assert.assertNotEquals("",this.quickCutOffSorter.Test());
+	}
 	
 	@Test
 	public void insertSorterSortIntArrayWorksCorrectly() {
 		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
 		this.insertSorter.SortIntArray(a);
-		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);	}
+		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);	
+	}
 	@Test
 	public void selectionSorterSortIntArrayWorksCorrectly() {
 		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
@@ -144,12 +165,20 @@ public class Sorter_Test {
 	public void mergeSorterSortIntArrayWorksCorrectly() {
 		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
 		this.mergeSorter.SortIntArray(a);
-		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);	}
+		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);
+		}
 	@Test
 	public void quickSorterSortIntArrayWorksCorrectly() {
 		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
 		this.quickSorter.SortIntArray(a);
-		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);	}
+		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);
+	}
+	@Test
+	public void quickCutOffSorterSortIntArrayWorksCorrectly() {
+		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
+		this.quickCutOffSorter.SortIntArray(a);
+		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);
+	}
 	
 	@Test
 	public void mergeSorterMergeFunctionWorksCorrectly() {
@@ -174,6 +203,10 @@ public class Sorter_Test {
 	@Test
 	public void printQuickSortTimes() {
 		getSortTimesForGivenSorter(this.quickSorter);
+	}
+	@Test
+	public void printQuickCutOffSortTimes() {
+		getSortTimesForGivenSorter(this.quickCutOffSorter);
 	}
 	
 	private void getSortTimesForGivenSorter(Sorter sorter) {
