@@ -12,6 +12,7 @@ import Sorters.QuickCutOffSorter;
 import Sorters.QuickSorter;
 import Sorters.SelectionSorter;
 import Sorters.Sorter;
+import Sorters.ThreeWayQuickSort;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,8 +29,8 @@ public class Sorter_Test {
 	Sorter quickSorter;
 	Sorter quickCutOffSorter;
 	Sorter medianQuickSorter;
+	Sorter threeWayQuickSorter;
 	int[] file1,file2,file3,file4;
-	List<Sorter> sorters;
 	
 	private int[] LoadFile(String filePath) {		
 		String currentLine = null;
@@ -59,13 +60,7 @@ public class Sorter_Test {
 		this.quickSorter = new QuickSorter();
 		this.quickCutOffSorter = new QuickCutOffSorter();
 		this.medianQuickSorter = new MedianQuickSorter();
-		this.sorters = new ArrayList<>();
-		this.sorters.add(new InsertSorter());
-		this.sorters.add(new SelectionSorter());
-		this.sorters.add(new MergeSorter());
-		this.sorters.add(new QuickSorter());
-		this.sorters.add(new QuickCutOffSorter());
-		this.sorters.add(new MedianQuickSorter());
+		this.threeWayQuickSorter = new ThreeWayQuickSort();
 		this.file1 = LoadFile("./src/Test/10.txt");
 		this.file2 = LoadFile("./src/Test/50.txt");
 		this.file3 = LoadFile("./src/Test/100.txt");
@@ -79,7 +74,7 @@ public class Sorter_Test {
 		this.quickSorter = null;
 		this.quickCutOffSorter = null;
 		this.medianQuickSorter = null;
-		this.sorters = null;
+		this.threeWayQuickSorter = null;
 	}
 	@Test
 	public void insertSorterHasSortMethod() {
@@ -154,6 +149,18 @@ public class Sorter_Test {
 		Assert.assertTrue("Median Quick Sorter needs to have SortIntArray function...",hasMethod);
 	}
 	@Test
+	public void threeWayQuickSorterHasSortMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.threeWayQuickSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortIntArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("3 way Quick Sorter needs to have SortIntArray function...",hasMethod);
+	}
+	@Test
 	public void medianQuickSorterHasSortSubArrayMethod() {
 		boolean hasMethod = false;
 		Method[] methods = this.medianQuickSorter.getClass().getMethods();
@@ -225,6 +232,18 @@ public class Sorter_Test {
 		}
 		Assert.assertTrue("Quick Cut Off Sorter needs to have SortSubArray function...",hasMethod);
 	}
+	@Test
+	public void threeWayQuickSorterHasSortSubArrayMethod() {
+		boolean hasMethod = false;
+		Method[] methods = this.threeWayQuickSorter.getClass().getMethods();
+		for (Method m : methods) {
+			if (m.getName().equals("SortSubArray")) {
+				hasMethod = true;
+				break;
+			}
+		}
+		Assert.assertTrue("3 way quick Sorter needs to have SortSubArray function...",hasMethod);
+	}
 	
 	@Test
 	public void insertSorterHasFunctionalTestMethod() {
@@ -249,6 +268,10 @@ public class Sorter_Test {
 	@Test
 	public void medianQuickSorterHasFunctionalTestMethod() {
 		Assert.assertNotEquals("",this.medianQuickSorter.Test());
+	}
+	@Test
+	public void threeWayQuickSorterHasFunctionalTestMethod() {
+		Assert.assertNotEquals("",this.threeWayQuickSorter.Test());
 	}
 
 	@Test
@@ -287,7 +310,12 @@ public class Sorter_Test {
 		this.medianQuickSorter.SortIntArray(a);
 		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);
 	}
-	
+	@Test
+	public void threeWayQuickSorterSortIntArrayWorksCorrectly() {
+		int[] a = new int[]{8,23,8,32,90,3,6,1,0,45,2,67,2,42};
+		this.threeWayQuickSorter.SortIntArray(a);
+		Assert.assertArrayEquals(new int[]{0,1,2,2,3,6,8,8,23,32,42,45,67,90},a);
+	}
 	@Test
 	public void mergeSorterMergeFunctionWorksCorrectly() {
 		MergeSorter mergeSorter = new MergeSorter();
@@ -320,10 +348,14 @@ public class Sorter_Test {
 	public void printMedianQuickSortTimes() {
 		getSortTimesForGivenSorter(this.medianQuickSorter);
 	}
-	
+	@Test
+	public void printThreeWayQuickSortTimes() {
+		getSortTimesForGivenSorter(this.threeWayQuickSorter);
+	}
 	private void getSortTimesForGivenSorter(Sorter sorter) {
 		System.out.println(sorter.getClass().getSimpleName()+" Sorter Sort Speeds (picoseconds):\n");
 		System.out.println("[10]: "+(TimeToSort(file1,sorter)));
+		System.out.println(Arrays.toString(file2));
 		System.out.println("[50]: "+(TimeToSort(file2,sorter)));
 		System.out.println("[100]: "+(TimeToSort(file3,sorter)));
 		System.out.println("[1000]: "+(TimeToSort(file4,sorter)) + "\n");
