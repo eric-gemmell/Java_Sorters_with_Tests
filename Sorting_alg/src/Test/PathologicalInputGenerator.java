@@ -6,7 +6,7 @@ public class PathologicalInputGenerator {
 	public int[] QuickSortNightmare(int length) {
 		int[] horrorArray = new int[length];
 		for (int i = 0; i < length; i++) {
-			horrorArray[i] = 0;
+			horrorArray[i] = i;
 		}
 		return horrorArray;
 	}
