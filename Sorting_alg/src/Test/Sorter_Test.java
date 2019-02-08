@@ -385,18 +385,22 @@ public class Sorter_Test {
 	@Test
 	public void QuickSortWorstCaseScenario() {
 		PathologicalInputGenerator a = new PathologicalInputGenerator();
-		int[] horrorArray = a.QuickSortNightmare(1000);
+		int arrayLength = 10000;
+		int[] horrorArray = a.QuickSortNightmare(arrayLength);
+		int[] normalArray = a.NormalArray(arrayLength);
 		long WCS = TimeToSort(horrorArray,this.quickSorter);
-		long NCS = TimeToSort(file4,this.quickSorter);
+		long NCS = TimeToSort(normalArray,this.quickSorter);
 		System.out.println("Quick Sorter Worst Case Scenario Analysis:\nNormal Sorting Time: "+NCS+"\nWorst Case Scenario Sorting Time: "+WCS+"\nSpeed Factor: "+(WCS/NCS)+"\n");
 	}
 	
 	@Test
 	public void MedianQuickSortWorstCaseScenario() {
 		PathologicalInputGenerator a = new PathologicalInputGenerator();
-		int[] horrorArray = a.MedianQuickSortNightmare(1000);
+		int arrayLength = 10000;
+		int[] horrorArray = a.MedianQuickSortNightmare(arrayLength);
+		int[] normalArray = a.NormalArray(arrayLength);
 		long WCS = TimeToSort(horrorArray,this.medianQuickSorter);
-		long NCS = TimeToSort(file4,this.medianQuickSorter);
+		long NCS = TimeToSort(normalArray,this.medianQuickSorter);
 		System.out.println("Median Quick Sorter Worst Case Scenario Analysis:\nNormal Sorting Time: "+NCS+"\nWorst Case Scenario Sorting Time: "+WCS+"\nSpeed Factor: "+(WCS/NCS)+"\n");
 	}
 }
