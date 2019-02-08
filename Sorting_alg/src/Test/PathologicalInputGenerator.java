@@ -1,7 +1,7 @@
 package Test;
 
 import java.util.Arrays;
-
+import java.util.Random;
 public class PathologicalInputGenerator {
 	public int[] QuickSortNightmare(int length) {
 		int[] horrorArray = new int[length];
@@ -16,6 +16,14 @@ public class PathologicalInputGenerator {
 			horrorArray[i] = 0;
 		}
 		return horrorArray;
+	}
+	public int[] NormalArray(int arrayLength) {
+		int[] randomArray = new int[arrayLength];
+		Random random = new Random();
+		for (int i = 0;i<arrayLength;i++) {
+			randomArray[i] = random.nextInt(arrayLength);
+		}
+		return randomArray;
 	}
 	public static void main(String[] args) {
 		PathologicalInputGenerator a = new PathologicalInputGenerator();
