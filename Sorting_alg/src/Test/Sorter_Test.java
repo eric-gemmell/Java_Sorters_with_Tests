@@ -403,4 +403,14 @@ public class Sorter_Test {
 		long NCS = TimeToSort(normalArray,this.medianQuickSorter);
 		System.out.println("Median Quick Sorter Worst Case Scenario Analysis:\nNormal Sorting Time: "+NCS+"\nWorst Case Scenario Sorting Time: "+WCS+"\nSpeed Factor: "+(WCS/NCS)+"\n");
 	}
+	@Test
+	public void MedianQuickSortWorstCaseScenarioNoDuplicates() {
+		PathologicalInputGenerator a = new PathologicalInputGenerator();
+		int arrayLength = 10000;
+		int[] horrorArray = a.QuickSortNightmare(arrayLength);
+		int[] normalArray = a.NormalArray(arrayLength);
+		long WCS = TimeToSort(horrorArray,this.medianQuickSorter);
+		long NCS = TimeToSort(normalArray,this.medianQuickSorter);
+		System.out.println("Median Quick Sorter Worst Case Scenario Analysis Without Duplicates:\nNormal Sorting Time: "+NCS+"\nWorst Case Scenario Sorting Time: "+WCS+"\nSpeed Factor: "+(WCS/NCS)+"\n");
+	}
 }
