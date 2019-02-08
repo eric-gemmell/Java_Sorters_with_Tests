@@ -246,12 +246,12 @@ Part 3
 Worst Case Scenarios can be created very easily for both Quick Sort And Median of 3 Quick Sort, as can be seen in my JUnit test file.
 For standard quick sort, one only needs to create an ordered array. Quicksort grabs the last element of the array and partition the array into two around that value, and continues successively. 
 Each iteration of the partition loop takes O(n) time, and since in this worst case scenario, each iteration of the Partition only sorts one element, the loop is done n times, therefore the complexity is O(n^2).
-As can be seen in the output log of my JUnit test:
+As can be seen in the output log of my JUnit test with an array of size 10000:
 ------------------------------------------
 Quick Sorter Worst Case Scenario Analysis:
 Normal Sorting Time: 50578
-Worst Case Scenario Sorting Time: 685404
-Speed Factor: 13
+Worst Case Scenario Sorting Time: 6854046
+Speed Factor: 243
 ------------------------------------------
 
 For median of 3, the same thing can be acheived by simply feeding a n sized arra, all of value 0. Same as for QuickSort. Each iteration only sorts one element, therefore performing n^2 iterations and degrading to a complexity of O(n^2).
@@ -259,7 +259,17 @@ Here are the output logs:
 -------------------------------------------------
 Median Quick Sorter Worst Case Scenario Analysis:
 Normal Sorting Time: 47539
-Worst Case Scenario Sorting Time: 1066484
-Speed Factor: 22
+Worst Case Scenario Sorting Time: 10664844
+Speed Factor: 202
 -------------------------------------------------
-One thing to note is that feeding a worst case scenario array to these two algorythms, creates a buffer overflow exception for arrays over 1000!
+One thing to note is that feeding a worst case scenario array to these two algorythms, creates a buffer overflow exception for arrays over 1000 on my local computer.
+In the lab computers however, which is where these results were gotten from, no issue is found at 10000 elements.
+If duplicate elements are not allowed in the array, the "median of 3 Quick Sorter pathological input generator" can use a sorted array instead.
+Since my implementation uses the median of the last 3 values of the array as pivot, each iteration of the partition loop would only sort the last two elements,
+resulting in O(n^2) complexity. Here are the output logs:
+-------------------------------------------------
+Median Quick Sorter Worst Case Scenario Analysis Without Duplicates:
+Normal Sorting Time: 45339
+Worst Case Scenario Sorting Time: 8645844
+Speed Factor: 190
+-------------------------------------------------
