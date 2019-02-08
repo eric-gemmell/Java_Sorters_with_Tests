@@ -153,7 +153,7 @@ function SortSubArray(Array A, int p, int r) {
 Part 2
 ------
 
-Here is the log output of the times different sorting algorythms take to sort different sized arrays:
+Here is the log output of the times different sorting algorithms take to sort different sized arrays:
 
 QuickSorter Sorter Sort Speeds (picoseconds):
 
@@ -218,7 +218,7 @@ SelectionSorter Sorter Sort Speeds (picoseconds):
 [500000]: 593299454742
 [1000000]: 151529697544
 
-To start off lets compare the time it took for the 4 algorythms created in part one to sort the 1 million element array
+To start off lets compare the time it took for the 4 algorithms created in part one to sort the 1 million element array
 
 -Basic_QuickSort: 45.341369 milliseconds
 -QuickSort_with_InsertSort_CutOff: 48.503821 milliseconds
@@ -226,8 +226,8 @@ To start off lets compare the time it took for the 4 algorythms created in part 
 -3_Way_QuickSort: 38.998807 milliseconds
 
 We can see here 3_Way_QuickSort was the fastest, but not by much, something we would not have expected since 3_Way is designed for highly repetitive arrays. 
-One would expect QuickSort_with_InsertSort_CutOff to be the fastest since insert sort is faster for small arrays, but here that is not the case.
-These results are non conclusive however since here other factors such as how objects are declared can have an effect.
+One would expect QuickSort_with_InsertSort_CutOff to be the fastest since insert sort is meant to be faster for small arrays, but here that is not the case.
+As can be seen in the output log above, Insert Sort is not faster than any quicksort for any sized array.
 
 When one compares any form of Quick Sort to insert or selection sort however the difference is obvious:
 -Insertion_Sort: 27069.061770 milliseconds, 27 seconds!
@@ -244,8 +244,8 @@ Part 3
 ------
 
 Worst Case Scenarios can be created very easily for both Quick Sort And Median of 3 Quick Sort, as can be seen in my JUnit test file.
-For standard quick sort, one only needs to create an ordered array, since quicksort will grab the last element of the list and partition the array into two around that value, and continue successively. 
-Each iteration of the partition loop takes O(n) time. Since in this worst case scenario, each iteration of the Partition only sorts one element, the loop is done n times, therefore the complexity is O(n^2).
+For standard quick sort, one only needs to create an ordered array. Quicksort grabs the last element of the array and partition the array into two around that value, and continues successively. 
+Each iteration of the partition loop takes O(n) time, and since in this worst case scenario, each iteration of the Partition only sorts one element, the loop is done n times, therefore the complexity is O(n^2).
 As can be seen in the output log of my JUnit test:
 ------------------------------------------
 Quick Sorter Worst Case Scenario Analysis:
